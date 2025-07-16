@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Video Tutorial</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #000;
+    }
+
+    .video-container {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .video-container iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .info-section {
+      background: #fff;
+      padding: 30px 20px;
+      text-align: center;
+    }
+
+    .info-section h2 {
+      margin-bottom: 10px;
+      font-size: 22px;
+      color: #333;
+    }
+
+    .btn-link {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 12px 24px;
+      background-color: #00bcd4;
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 6px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+      transition: background-color 0.3s;
+    }
+
+    .btn-link:hover {
+      background-color: #0097a7;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Video -->
+  <div class="video-container">
+    <iframe 
+      id="player"
+      src="https://www.youtube.com/embed/VEGuvL-fdY4?enablejsapi=1&modestbranding=1&rel=0"
+      allowfullscreen="true"
+      allow="autoplay; fullscreen; encrypted-media">
+    </iframe>
+  </div>
+
+  <!-- Sección inferior -->
+  <div class="info-section" id="info-section">
+    <h2>¿Listo para probar la aplicación?</h2>
+    <a href="https://estacionamiento-y-lavados.web.app/auth/login/index.html" class="btn-link" target="_blank">
+      Ir a la aplicación
+    </a>
+  </div>
+
+  <!-- Script para detectar fin del video y hacer scroll -->
+  <script>
+    // Cargar la API de YouTube
+    var tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    var player;
+
+    function onYouTubeIframeAPIReady() {
+      player = new YT.Player('player', {
+        events: {
+          'onStateChange': onPlayerStateChange
+        }
+      });
+    }
+
+    function onPlayerStateChange(event) {
+      if (event.data === YT.PlayerState.ENDED) {
+        // Hacer scroll hacia la sección inferior
+        document.getElementById('info-section').scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  </script>
+
+</body>
+</html>
